@@ -10,6 +10,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Category extends BaseEntity{
 
     @Id
