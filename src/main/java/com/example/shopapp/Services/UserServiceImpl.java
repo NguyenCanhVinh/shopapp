@@ -1,6 +1,7 @@
 package com.example.shopapp.Services;
 
 import com.example.shopapp.dto.UserDTO;
+import com.example.shopapp.exception.DataNotFoundException;
 import com.example.shopapp.models.Role;
 import com.example.shopapp.models.User;
 import com.example.shopapp.repositories.RoleRepository;
@@ -19,7 +20,7 @@ public class UserServiceImpl implements UserService{
   private final RoleRepository roleRepository;
 
   @Override
-  public User createUser(UserDTO userDTO) {
+  public User createUser(UserDTO userDTO) throws DataNotFoundException {
     String phoneNumber= userDTO.getPhoneNumber();
     if (userRepository.existsByPhoneNumber(phoneNumber)){
       throw  new DataIntegrityViolationException("phone number khong ton tai!");
@@ -35,8 +36,15 @@ public class UserServiceImpl implements UserService{
       .googleAccountId(userDTO.getGoogleAccountId())
       .build();
     Role role= roleRepository.findById(userDTO.getRoleId())
-      .orElseThrow(() ->)
-    return null;
+      .orElseThrow(() -> new DataNotFoundException("role not foud"));
+    newUser.setRole(role);
+    if (userDTO.getFacebookAccountId()==0 && userDTO.getFacebookAccountId()==0){
+      String password= userDTO.getPassword();
+//      String encodePasword= passwordEncode.encode(password);
+//      newUser.setPassword(encodePasword);
+
+    }
+    return userRepository.save(newUser);
   }
 
   @Override
