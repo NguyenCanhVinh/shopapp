@@ -46,8 +46,15 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody UserLoginDTO userLoginDTO){
         // Kime tra thong tin dang nhap va sinh ra token
-        //Tra ve token cua reponse
-        String token= userService.login(userLoginDTO.getPhoneNumber(), userLoginDTO.getPassword());
-        return ResponseEntity.ok(token);
+        //Tra ve token cua reponse\
+        try {
+            String token= userService.login(userLoginDTO.getPhoneNumber(), userLoginDTO.getPassword());
+            return ResponseEntity.ok(token);
+
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+
     }
 }
