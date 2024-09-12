@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.security.InvalidParameterException;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class jwtTokenUtil {
   @Value(("${jwt.secretKey}"))
   private String secretKey;
 
-  public String generateToken(User user){
+  public String generateToken(User user) throws Exception{
 
     Map<String, Object> claims = new HashMap<>();
     claims.put("phoneNumber", user.getPhoneNumber());
@@ -40,7 +41,7 @@ public class jwtTokenUtil {
       return token;
     } catch (Exception e) {
       //you can "inject" logger. insteadsysystem.out. print
-      System.err.println(" Cannot create jwt token" + e.getMessage());
+//      throw  new InvalidParameterException("Cannot create jwt token" + e.getMessage());
       return  null;
     }
 

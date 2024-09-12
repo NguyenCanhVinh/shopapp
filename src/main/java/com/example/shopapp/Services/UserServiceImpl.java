@@ -72,7 +72,8 @@ public class UserServiceImpl implements UserService{
 
     }
       //check password
-    UsernamePasswordAuthenticationToken authenticationToken= new UsernamePasswordAuthenticationToken(phoneNumber, password);
+    UsernamePasswordAuthenticationToken authenticationToken= new UsernamePasswordAuthenticationToken(
+      phoneNumber, password, existingUser.getAuthorities());
     //authenticate with java spring sercurity
     authenticationManager.authenticate(authenticationToken);
     return jwtTokenUtil.generateToken(optionalUser.get());
