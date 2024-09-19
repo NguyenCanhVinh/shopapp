@@ -53,7 +53,7 @@ public class UserController {
 
         }
         catch (Exception e){
-            throw new RuntimeException(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
     }
